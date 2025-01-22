@@ -1,6 +1,6 @@
 package com.polytech.hospitalplanning.models;
 
-import java.util.List;
+import java.util.Vector ;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,10 +17,42 @@ public class Roulement {
     private Integer id;
 
     @ManyToMany
-    private List<Personne> personnes;
+    private Vector<Personne> personnes = new Vector<>();
 
     @ManyToMany
-    private List<Shift> shifts;
+    private Vector<Shift> shifts = new Vector<>();
+
+    // Méthodes
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer newId) {
+        this.id = newId;
+    }
+
+    public Vector<Personne> getPersonnes() {
+        return new Vector<>(personnes);
+    }
+
+    public Vector<Shift> getShifts() {
+        return new Vector<>(shifts);
+    }
+
+    public void ajouterPersonne(Personne personne) {
+        personnes.add(personne);
+    }
+
+    public void ajouterShift(Shift shift) {
+        shifts.add(shift);
+    }
+
+    public boolean verifierEquilibre() {
+        return personnes.size() == shifts.size();
+    }
+
+    public void genererCycle() {}
 
     public boolean isValidRotation() {
         return personnes.size() == shifts.size();
