@@ -16,7 +16,21 @@ public class RoulementService {
     }
 
     // Génère un cycle pour un roulement
-    public void genererCycle(Roulement roulement) {}
+    public void genererCycle(Roulement roulement) {
+        Vector<Personne> personnes = roulement.getPersonnes();
+        Vector<Shift> shifts = roulement.getShifts();
+
+        if (personnes.isEmpty() || shifts.isEmpty()) {
+            throw new IllegalStateException("Le roulement ne peut pas être généré : aucune personne ou aucun shift disponible.");
+        }
+
+        // Exemple de logique : assignation circulaire des shifts aux personnes
+        for (int i = 0; i < shifts.size(); i++) {
+            Personne personne = personnes.get(i % personnes.size());
+            Shift shift = shifts.get(i);
+            assignerShift(personne, shift);
+        }
+    }
 
     // Ajoute une personne au roulement
     public void ajouterPersonne(Roulement roulement, Personne personne) {
